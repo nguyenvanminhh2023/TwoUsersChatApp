@@ -13,6 +13,7 @@ public class ChatClient {
     private InputStream serverIn;
     private OutputStream serverOut;
     private BufferedReader bufferedIn;
+    private String status;
 
     private ArrayList<UserStatusListener> userStatusListeners = new ArrayList<>();
     private ArrayList<MessageListener> messageListeners = new ArrayList<>();
@@ -55,6 +56,8 @@ public class ChatClient {
             } else {
                 System.err.println("Login failed");
             }
+
+            //client.logoff();
         }
     }
 
@@ -134,6 +137,7 @@ public class ChatClient {
         for(UserStatusListener listener : userStatusListeners) {
             listener.offline(login);
         }
+        status = "Offline now";
     }
 
     private void handleOnline(String[] tokens) {
@@ -141,6 +145,7 @@ public class ChatClient {
         for(UserStatusListener listener : userStatusListeners) {
             listener.online(login);
         }
+        status = "Active now";
     }
 
     public boolean connect() {
@@ -171,6 +176,10 @@ public class ChatClient {
 
     public void removeMessageListener(MessageListener listener) {
         messageListeners.remove(listener);
+    }
+
+    public String getStatus(){
+        return this.status;
     }
 
 }

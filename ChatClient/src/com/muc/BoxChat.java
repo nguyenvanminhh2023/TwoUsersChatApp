@@ -51,6 +51,11 @@ public class BoxChat extends JPanel implements MessageListener, ActionListener{
 
         l1.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent ae){
+                try {
+                    client.logoff();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 System.exit(0);
             }
         });
@@ -112,7 +117,7 @@ public class BoxChat extends JPanel implements MessageListener, ActionListener{
         Timer t = new Timer(1, new ActionListener(){
             public void actionPerformed(ActionEvent ae){
                 if(!typing){
-                    l4.setText("Active Now");
+                    l4.setText(client.getStatus());
                 }
             }
         });
